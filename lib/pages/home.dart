@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = <Widget>[
     WeekPage(),
     SearchPage(),
-    ProfilePage(),
+    UserProfile(),
   ];
 
   @override
@@ -31,18 +31,30 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: _pages.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
+            icon: Icon(
+              Icons.calendar_today,
+              color: Colors.blue.shade700,
+            ),
             label: 'Рассписание',
+            backgroundColor: Colors.blue.shade700,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
+            icon: Icon(
+              Icons.search,
+              color: Colors.blue.shade700,
+            ),
             label: 'Поиск',
+            backgroundColor: Colors.blue.shade700,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(
+              Icons.person,
+              color: Colors.blue.shade700,
+            ),
             label: 'Профиль',
+            backgroundColor: Colors.blue.shade700,
           ),
         ],
         currentIndex: _selectedIndex,

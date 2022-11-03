@@ -12,8 +12,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final myController = TextEditingController();
-
+  final myControllerLog = TextEditingController();
+  final myControllerPass = TextEditingController();
+  bool toggle = true;
+  Color _color = Colors.grey;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,8 +47,8 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30)),
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)),
                 ),
                 child: SingleChildScrollView(
                   child: Padding(
@@ -77,33 +79,73 @@ class _LoginPageState extends State<LoginPage> {
                                           color: Colors.grey.shade200)),
                                 ),
                                 child: TextField(
-                                  obscureText: true,
-                                  obscuringCharacter: "*",
                                   keyboardType: TextInputType.number,
-                                  controller: myController,
+                                  controller: myControllerLog,
                                   decoration: const InputDecoration(
                                       hintText: "Табельный номер",
                                       hintStyle: TextStyle(color: Colors.grey),
                                       border: InputBorder.none),
                                 ),
                               ),
+                              Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          color: Colors.grey.shade200)),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: TextField(
+                                        obscureText: toggle,
+                                        obscuringCharacter: "•",
+                                        controller: myControllerPass,
+                                        decoration: const InputDecoration(
+                                            hintText: "Пароль",
+                                            hintStyle:
+                                                TextStyle(color: Colors.grey),
+                                            border: InputBorder.none),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          toggle = !toggle;
+                                          if (toggle == false) {
+                                            _color = Colors.blue.shade700;
+                                          }
+                                          else{
+                                            _color = Colors.grey;
+                                          }
+                                        });
+                                      },
+                                      child: Container(
+                                          margin:
+                                              const EdgeInsets.only(right: 5),
+                                          child: Icon(Icons.remove_red_eye,
+                                              color: _color)),
+                                    )
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                        const SizedBox(height: 40),
+                        const SizedBox(height: 30),
                         Container(
                             height: 80,
                             padding: const EdgeInsets.all(20),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue[800],
+                                backgroundColor: Colors.blue.shade700,
                                 minimumSize: const Size.fromHeight(50),
                               ),
                               child: const Text('Войти'),
                               onPressed: () async {
                                 final prefs =
                                     await SharedPreferences.getInstance();
-                                prefs.setString('login', myController.text);
+                                prefs.setString('login', myControllerLog.text);
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
@@ -111,6 +153,11 @@ class _LoginPageState extends State<LoginPage> {
                                 );
                               },
                             )),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Text("Забыли пароль?",
+                              style: TextStyle(color: Colors.grey)),
+                        ),
                       ],
                     ),
                   ),

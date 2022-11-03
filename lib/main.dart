@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:miit_app/pages/home.dart';
 import 'package:miit_app/pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: Start(),
     );
   }
 }
@@ -50,7 +52,6 @@ class _StartState extends State<Start> {
       prefs.setString('login', groupName);
     });
   }
-
   @override
   Widget build(BuildContext context) {
     if (login != '') {

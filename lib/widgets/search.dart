@@ -13,7 +13,7 @@ class _SearchPageState extends State<SearchPage> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+        gradient: LinearGradient(begin: Alignment.bottomCenter, colors: [
           Colors.blue.shade900,
           Colors.blue.shade500,
           Colors.blue.shade400,
@@ -44,8 +44,8 @@ class _SearchPageState extends State<SearchPage> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30)),
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)),
                 ),
               ),
             ),

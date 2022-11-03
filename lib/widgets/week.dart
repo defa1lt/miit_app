@@ -18,7 +18,7 @@ class _WeekPageState extends State<WeekPage> {
   }
 
   void _resetSelectedDate() {
-    _selectedDate = DateTime.now().add(Duration(days: 2));
+    _selectedDate = DateTime.now();
   }
 
   @override
@@ -49,7 +49,11 @@ class _WeekPageState extends State<WeekPage> {
             CalendarTimeline(
               showYears: false,
               initialDate: _selectedDate,
-              firstDate: DateTime.now(),
+              firstDate: DateTime(
+                2022,
+                9,
+                1,
+              ),
               lastDate: DateTime(
                 2022,
                 12,
@@ -61,9 +65,8 @@ class _WeekPageState extends State<WeekPage> {
               dayColor: Colors.white70,
               dayNameColor: Colors.white70,
               activeDayColor: Colors.white,
-              activeBackgroundDayColor: Colors.blue.shade500,
+              activeBackgroundDayColor: Colors.blue.shade700,
               dotsColor: Colors.white70,
-              selectableDayPredicate: (date) => date.day != 23,
               locale: 'ru',
             ),
             SizedBox(height: 20),
@@ -73,8 +76,8 @@ class _WeekPageState extends State<WeekPage> {
                           decoration: const BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(30),
-                                  topRight: Radius.circular(30)),
+                                  topLeft: Radius.circular(20),
+                                  topRight: Radius.circular(20)),
                               boxShadow: [BoxShadow(blurRadius: 10.0)]),
                           child:
                               TimetableListView(date: _selectedDate.toString()),
