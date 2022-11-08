@@ -4,7 +4,7 @@ import 'package:miit_app/pages/profile_pages/settings.dart';
 import 'package:miit_app/pages/profile_pages/mark.dart';
 import 'package:miit_app/pages/profile_pages/info.dart';
 import 'package:miit_app/pages/profile_pages/help.dart';
-import 'package:miit_app/pages/profile_pages/notifications.dart';
+import 'package:miit_app/pages/profile_pages/notifications_page.dart';
 import 'package:miit_app/pages/profile_pages/get_document.dart';
 
 class UserProfile extends StatelessWidget {
