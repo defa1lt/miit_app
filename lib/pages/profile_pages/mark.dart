@@ -39,7 +39,7 @@ class _MarkPageState extends State<MarkPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 20,
+              height: 30,
             ),
             Expanded(
               child: Container(

@@ -39,7 +39,7 @@ class _GetPageState extends State<GetPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 20,
+              height: 30,
             ),
             Expanded(
               child: Container(

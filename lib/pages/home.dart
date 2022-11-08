@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:miit_app/pages/profile.dart';
 import 'package:miit_app/widgets/search.dart';
+import 'package:miit_app/widgets/task.dart';
 import 'package:miit_app/widgets/week.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,7 +23,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _pages = <Widget>[
     WeekPage(),
-    SearchPage(),
+    TaskPage(),
     UserProfile(),
   ];
 
@@ -31,6 +32,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: _pages.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: Colors.blue.shade700,
+        selectedItemColor: Colors.blue.shade700,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
@@ -38,15 +41,13 @@ class _HomePageState extends State<HomePage> {
               color: Colors.blue.shade700,
             ),
             label: 'Рассписание',
-            backgroundColor: Colors.blue.shade700,
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.search,
+              Icons.task,
               color: Colors.blue.shade700,
             ),
-            label: 'Поиск',
-            backgroundColor: Colors.blue.shade700,
+            label: 'Задания',
           ),
           BottomNavigationBarItem(
             icon: Icon(
@@ -54,7 +55,6 @@ class _HomePageState extends State<HomePage> {
               color: Colors.blue.shade700,
             ),
             label: 'Профиль',
-            backgroundColor: Colors.blue.shade700,
           ),
         ],
         currentIndex: _selectedIndex,

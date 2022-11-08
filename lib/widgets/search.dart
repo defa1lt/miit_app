@@ -21,9 +21,18 @@ class _SearchPageState extends State<SearchPage> {
       ),
       child: Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: Colors.black, //change your color here
+          ),
           flexibleSpace: SafeArea(
             child: Container(
-              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.only(
+                  left: 50, right: 20, top: 10, bottom: 8),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade200,
+                borderRadius: BorderRadius.all(Radius.circular(50)),
+              ),
+              padding: const EdgeInsets.only(left: 10),
               child: TextField(
                 controller: myController,
                 decoration: const InputDecoration(
@@ -44,7 +53,7 @@ class _SearchPageState extends State<SearchPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 20,
+              height: 30,
             ),
             Expanded(
               child: Container(

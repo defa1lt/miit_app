@@ -54,7 +54,7 @@ class _StartState extends State<Start> {
   }
   @override
   Widget build(BuildContext context) {
-    if (login != '') {
+    if (login == '') {
       return const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: HomePage(),
