@@ -1,39 +1,34 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SearchPage extends StatefulWidget {
+class MarkPage extends StatefulWidget {
   @override
-  _SearchPageState createState() => _SearchPageState();
+  _MarkPageState createState() => _MarkPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _MarkPageState extends State<MarkPage> {
   final myController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(begin: Alignment.bottomCenter, colors: [
-          Colors.blue.shade900,
-          Colors.blue.shade500,
-          Colors.blue.shade400,
-        ]),
-      ),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(begin: Alignment.bottomCenter, colors: [
+            Colors.blue.shade900,
+            Colors.blue.shade500,
+            Colors.blue.shade400,
+          ]),
+        ),
       child: Scaffold(
         appBar: AppBar(
-          flexibleSpace: SafeArea(
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              child: TextField(
-                controller: myController,
-                decoration: const InputDecoration(
-                    hintText: "Поиск",
-                    hintStyle: TextStyle(color: Colors.grey),
-                    border: InputBorder.none),
-              ),
-            ),
+          iconTheme: IconThemeData(
+            color: Colors.black, //change your color here
           ),
           backgroundColor: Colors.white,
+          title: Text(
+            'Результаты сессии',
+            style: TextStyle(color: Colors.black,fontSize: 18,)
+          ),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(20),

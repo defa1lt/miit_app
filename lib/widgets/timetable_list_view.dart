@@ -134,7 +134,7 @@ class _TimetableListViewState extends State<TimetableListView> {
         lessonTime = '15:20 - 16:40';
       }
       if (i.lessonNumber == 6) {
-        lessonTime = '16:55 - 18:15';
+        lessonTime = '16:55 - 18:15 ';
       }
       s = '${i.lesson[0].type},${i.lesson[0].name},${i.teacher[0].firstName} ${i.teacher[0].lastName} ${i.teacher[0].middleName},${i.location[0].number},$lessonTime,$dayName,${i.weekParity}';
       timetableList.add(s);

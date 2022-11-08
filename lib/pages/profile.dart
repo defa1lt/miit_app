@@ -1,49 +1,56 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:miit_app/pages/profile_pages/settings.dart';
+import 'package:miit_app/pages/profile_pages/mark.dart';
+import 'package:miit_app/pages/profile_pages/info.dart';
+import 'package:miit_app/pages/profile_pages/help.dart';
+import 'package:miit_app/pages/profile_pages/notifications.dart';
+import 'package:miit_app/pages/profile_pages/get_document.dart';
 
 class UserProfile extends StatelessWidget {
   List<MenuRowData> firstMenuRow = [
-    MenuRowData(Icons.notifications, 'Уведомления', SettingsPage()),
-    MenuRowData(Icons.library_books, 'Закакзать справку', SettingsPage()),
-    MenuRowData(Icons.flag_circle, 'Результаты сессии', SettingsPage()),
+    MenuRowData(Icons.notifications, 'Уведомления', NotificationsPage()),
+    MenuRowData(Icons.library_books, 'Закакзать справку', GetPage()),
+    MenuRowData(Icons.flag_circle, 'Результаты сессии', MarkPage()),
   ];
   List<MenuRowData> SecondMenuRow = [
     MenuRowData(Icons.settings, 'Настройки', SettingsPage()),
-    MenuRowData(Icons.info, 'О приложении', SettingsPage()),
-    MenuRowData(Icons.help, 'Помощь', SettingsPage()),
+    MenuRowData(Icons.info, 'О приложении', InfoPage()),
+    MenuRowData(Icons.help, 'Помощь', HelpPage()),
   ];
   UserProfile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(begin: Alignment.bottomCenter, colors: [
-          Colors.blue.shade900,
-          Colors.blue.shade500,
-          Colors.blue.shade400,
-        ]),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _UserInfo(),
-          SizedBox(
-            height: 30,
-          ),
-          _MenuWidget(
-            menuRow: firstMenuRow,
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          _MenuWidget(
-            menuRow: SecondMenuRow,
-          ),
-        ],
+    return SafeArea(
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(begin: Alignment.bottomCenter, colors: [
+            Colors.blue.shade900,
+            Colors.blue.shade500,
+            Colors.blue.shade400,
+          ]),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _UserInfo(),
+            SizedBox(
+              height: 30,
+            ),
+            _MenuWidget(
+              menuRow: firstMenuRow,
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            _MenuWidget(
+              menuRow: SecondMenuRow,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -141,7 +148,7 @@ class _GroupName extends StatelessWidget {
     return Text('УВП-211',
         style: TextStyle(
           color: Colors.grey,
-          fontSize: 17,
+          fontSize: 15,
         ));
   }
 }
@@ -156,7 +163,7 @@ class _PhoneNumber extends StatelessWidget {
     return Text('21109843@edu.rut-miit.ru',
         style: TextStyle(
           color: Colors.grey,
-          fontSize: 17,
+          fontSize: 15,
         ));
   }
 }
@@ -168,10 +175,10 @@ class _UserName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Устинов Константин',
+    return Text('Устинов Константин Дмитриевич',
         style: TextStyle(
           color: Colors.black,
-          fontSize: 25,
+          fontSize: 20,
         ));
   }
 }
