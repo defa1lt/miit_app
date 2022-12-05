@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+//import 'package:flutter/rendering.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'home.dart';
 
@@ -35,11 +35,10 @@ class _LoginPageState extends State<LoginPage> {
               height: 20,
             ),
             Center(
-              child: SizedBox(
-                child: Image.network(
-                    "https://www.miit.ru/content/Логотип%20РУТ%20(МИИТ)%20белый.png?id_wm=902352&SWidth=1280"),
-                height: 200,
+              child: Image.asset(
+                'assets/images/rut.png',
                 width: 300,
+                height: 200,
               ),
             ),
             Expanded(
@@ -114,8 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                                           toggle = !toggle;
                                           if (toggle == false) {
                                             _color = Colors.blue.shade700;
-                                          }
-                                          else{
+                                          } else {
                                             _color = Colors.grey;
                                           }
                                         });

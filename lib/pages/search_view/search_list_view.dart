@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'api.dart';
+import 'package:miit_app/widgets/api.dart';
 
 extension DateWeekExtensions on DateTime {
   int get isoWeekOfYear {
@@ -64,15 +64,24 @@ extension DateWeekExtensions on DateTime {
   }
 }
 
-class TimetableListView extends StatefulWidget {
+class SearchListView extends StatefulWidget {
   String date;
-  TimetableListView({Key? key, required this.date}) : super(key: key);
+  String firstName;
+  String lastName;
+  String middleName;
+  SearchListView(
+      {Key? key,
+      required this.date,
+      required this.firstName,
+      required this.lastName,
+      required this.middleName})
+      : super(key: key);
 
   @override
-  _TimetableListViewState createState() => _TimetableListViewState();
+  _SearchListViewState createState() => _SearchListViewState();
 }
 
-class _TimetableListViewState extends State<TimetableListView> {
+class _SearchListViewState extends State<SearchListView> {
   String s = '';
   String dayName = '';
   String lessonTime = '';
@@ -80,12 +89,11 @@ class _TimetableListViewState extends State<TimetableListView> {
 
   Future<void> _getTimeTableListApi() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.remove('timetable');
-    var id = 0;
+    prefs.remove('searchtimetable');
     timetableList.clear();
-    var data = json.decode(
-        (await http.get(Uri.parse("http://89.208.221.228/api/timetables/")))
-            .body);
+    var data = json.decode((await http.get(Uri.parse(
+            "http://89.208.221.228/api/timetables?teacher.firstName=${widget.firstName}&?teacher.lastName=${widget.lastName}&?teacher.middleName=${widget.middleName}")))
+        .body);
     TimeTables timeTable = TimeTables.fromJson(data);
     //await service.cancelAll();
     for (var i in timeTable.timetables) {
@@ -394,25 +402,18 @@ class _TimetableListViewState extends State<TimetableListView> {
           }
         }
       }
-
-      // await service.setnotifications(
-      //     id: id,
-      //     title: '${i.lesson[0].type} ${i.lesson[0].name}',
-      //     body: 'Начало через 5 минут в аудитории ${i.location[0].number}',
-      //     date: date);
-      s = '${i.lesson[0].type},${i.lesson[0].name},${i.teacher[0].lastName} ${i.teacher[0].firstName} ${i.teacher[0].middleName},${i.location[0].number},$lessonTime,$dayName,${i.weekParity}';
+      s = '${i.lesson[0].type},${i.lesson[0].name},${i.teacher[0].firstName} ${i.teacher[0].lastName} ${i.teacher[0].middleName},${i.location[0].number},$lessonTime,$dayName,${i.weekParity}';
       timetableList.add(s);
-      id++;
     }
 
-    prefs.setStringList('timetable', timetableList);
+    prefs.setStringList('searchtimetable', timetableList);
     setState(() {});
   }
 
   Future<void> getList() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      timetableList = (prefs.getStringList('timetable') ?? []);
+      timetableList = (prefs.getStringList('searchtimetable') ?? []);
     });
   }
 

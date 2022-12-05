@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:miit_app/widgets/notification_service.dart';
 import 'package:miit_app/widgets/timetable_tile.dart';
 import 'package:intl/intl.dart';
@@ -8,86 +6,24 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'api.dart';
 
-extension DateWeekExtensions on DateTime {
-  int get isoWeekOfYear {
-    // Get the monday of week 1
-    final DateTime mondayWeek1 = _isoWeek1Monday();
+late final LocalNotificationService service;
 
-    if (isBefore(mondayWeek1)) {
-      return DateTime(year - 1, 12, 31).isoWeekOfYear;
-    }
-
-    final int ordinalWeek1Monday = mondayWeek1.ordinalDate();
-    final int ordinal = ordinalDate();
-
-    int diffInDays = ordinal - ordinalWeek1Monday;
-    if (year > mondayWeek1.year) {
-      diffInDays += 365;
-      if (isLeapYear && DateTime(year, 2, 29).isBefore(this)) {
-        diffInDays += 1;
-      }
-    }
-    int week = (diffInDays ~/ 7) + 1;
-    if (week == 53 && weekday < DateTime.thursday) {
-      return 1;
-    }
-    return week;
-  }
-
-  int ordinalDate() {
-    final DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    final monthsBefore = DAYS_IN_MONTH.getRange(0, month - 1);
-
-    int days = monthsBefore.length > 0
-        ? monthsBefore.reduce((value, element) => value + element)
-        : 0;
-
-    if (month > 2 && isLeapYear) {
-      days += 1;
-    }
-
-    return days + day;
-  }
-
-  bool get isLeapYear {
-    return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
-  }
-
-  DateTime _isoWeek1Monday() {
-    final jan4 = DateTime(year, 1, 4); // Jan 4 is always in week 1
-
-    return DateTime(
-      jan4.year,
-      jan4.month,
-      jan4.day - jan4.weekday + 1,
-    );
-  }
-}
-
-class TimetableListView extends StatefulWidget {
-  String date;
-  TimetableListView({Key? key, required this.date}) : super(key: key);
-
-  @override
-  _TimetableListViewState createState() => _TimetableListViewState();
-}
-
-class _TimetableListViewState extends State<TimetableListView> {
-  String s = '';
-  String dayName = '';
-  String lessonTime = '';
-  List<String> timetableList = [];
-
-  Future<void> _getTimeTableListApi() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.remove('timetable');
+ Future<void> _getTimeTableListApi(String date) async {
+    
+    service = LocalNotificationService();
+    service.intialize();
+    listenToNotification();
+    String s = '';
+    String dayName = '';
+    String lessonTime = '';
+    List<String> timetableList = [];
     var id = 0;
     timetableList.clear();
     var data = json.decode(
         (await http.get(Uri.parse("http://89.208.221.228/api/timetables/")))
             .body);
     TimeTables timeTable = TimeTables.fromJson(data);
-    //await service.cancelAll();
+    await service.cancelAll();
     for (var i in timeTable.timetables) {
       if (i.dayNumber == 1) {
         dayName = 'пн';
@@ -128,7 +64,7 @@ class _TimetableListViewState extends State<TimetableListView> {
       if (i.lessonNumber == 8) {
         lessonTime = '20:05 - 21:25';
       }
-      widget.date;
+
       var date = DateTime.now();
       if (i.weekParity == 1) {
         if (i.dayNumber == 1) {
@@ -395,89 +331,19 @@ class _TimetableListViewState extends State<TimetableListView> {
         }
       }
 
-      // await service.setnotifications(
-      //     id: id,
-      //     title: '${i.lesson[0].type} ${i.lesson[0].name}',
-      //     body: 'Начало через 5 минут в аудитории ${i.location[0].number}',
-      //     date: date);
-      s = '${i.lesson[0].type},${i.lesson[0].name},${i.teacher[0].lastName} ${i.teacher[0].firstName} ${i.teacher[0].middleName},${i.location[0].number},$lessonTime,$dayName,${i.weekParity}';
+      await service.setnotifications(
+          id: id,
+          title: '${i.lesson[0].type} ${i.lesson[0].name}',
+          body: 'Начало через 5 минут в аудитории ${i.location[0].number}',
+          date: date);
+      s = '${i.lesson[0].type},${i.lesson[0].name},${i.teacher[0].firstName} ${i.teacher[0].lastName} ${i.teacher[0].middleName},${i.location[0].number},$lessonTime,$dayName,${i.weekParity}';
       timetableList.add(s);
       id++;
     }
-
-    prefs.setStringList('timetable', timetableList);
-    setState(() {});
-  }
-
-  Future<void> getList() async {
     final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      timetableList = (prefs.getStringList('timetable') ?? []);
-    });
+    prefs.setStringList('timetable', timetableList);
   }
-
-  late final LocalNotificationService service;
-
-  @override
-  void initState() {
-    service = LocalNotificationService();
-    service.intialize();
-    listenToNotification();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    getList();
-    int weeknum = 0;
-    var selectedDate = widget.date;
-    var _selectedDate = selectedDate.characters.take(10).toString().split('-');
-    if ((DateTime(int.parse(_selectedDate[0]), int.parse(_selectedDate[1]),
-                        int.parse(_selectedDate[2]))
-                    .isoWeekOfYear -
-                DateTime(2022, 9, 1).isoWeekOfYear) %
-            2 ==
-        0) {
-      weeknum = 1;
-    } else {
-      weeknum = 2;
-    }
-    String dayname = DateFormat.E('ru').format(DateTime(
-        int.parse(_selectedDate[0]),
-        int.parse(_selectedDate[1]),
-        int.parse(_selectedDate[2])));
-
-    List<String> type = [];
-    List<String> lesson = [];
-    List<String> theacher = [];
-    List<String> cabinet = [];
-    List<String> lesson_number = [];
-    for (String i in timetableList) {
-      if (i.split(',')[5] == dayname && i.split(',')[6] == weeknum.toString()) {
-        type.add(i.split(",")[0]);
-        lesson.add(i.split(",")[1]);
-        theacher.add(i.split(",")[2]);
-        cabinet.add(i.split(",")[3]);
-        lesson_number.add(i.split(",")[4]);
-      }
-    }
-    return RefreshIndicator(
-      onRefresh: _getTimeTableListApi,
-      child: ListView.builder(
-        itemCount: lesson.length,
-        itemBuilder: (BuildContext context, int index) {
-          return TimetableTile(
-            type: type[index],
-            lesson: lesson[index],
-            theacher: theacher[index],
-            cabinet: cabinet[index],
-            lesson_number: lesson_number[index],
-          );
-        },
-      ),
-    );
-  }
-
+  
   void listenToNotification() =>
       service.onNotificationClick.stream.listen(onNoticationListener);
 
@@ -486,4 +352,3 @@ class _TimetableListViewState extends State<TimetableListView> {
       print('payload $payload');
     }
   }
-}

@@ -4,12 +4,10 @@ import 'package:miit_app/pages/profile_pages/settings.dart';
 import 'package:miit_app/pages/profile_pages/mark.dart';
 import 'package:miit_app/pages/profile_pages/info.dart';
 import 'package:miit_app/pages/profile_pages/help.dart';
-import 'package:miit_app/pages/profile_pages/notifications_page.dart';
 import 'package:miit_app/pages/profile_pages/get_document.dart';
 
 class UserProfile extends StatelessWidget {
   List<MenuRowData> firstMenuRow = [
-    MenuRowData(Icons.notifications, 'Уведомления', NotificationsPage()),
     MenuRowData(Icons.library_books, 'Закакзать справку', GetPage()),
     MenuRowData(Icons.flag_circle, 'Результаты сессии', MarkPage()),
   ];

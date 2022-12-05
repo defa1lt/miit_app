@@ -1,12 +1,20 @@
-  import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class InfoPage extends StatefulWidget {
+import '../../../widgets/nearest_tile.dart';
+
+class GroupTask extends StatefulWidget {
   @override
-  _InfoPageState createState() => _InfoPageState();
+  _GroupTaskState createState() => _GroupTaskState();
 }
 
-class _InfoPageState extends State<InfoPage> {
+class _GroupTaskState extends State<GroupTask> {
+  List<String> grouptasks = [
+    "Сделать дз по математике",
+    "Сделать дз по физике",
+    "Сделать дз по русскому",
+    "Сделать дз по английскому",
+  ];
   final myController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -26,8 +34,8 @@ class _InfoPageState extends State<InfoPage> {
           ),
           backgroundColor: Colors.white,
           title: Text(
-            'О приложении',
-            style: TextStyle(color: Colors.black,fontSize: 18,)
+            'Общие задания',
+            style: TextStyle(color: Colors.black,fontSize: 18,),
           ),
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -42,14 +50,23 @@ class _InfoPageState extends State<InfoPage> {
               height: 30,
             ),
             Expanded(
-              child: Container(
-                decoration: BoxDecoration(
+              child:Container(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20)),
                 ),
+                child: ListView.builder(
+                  itemCount: grouptasks.length,
+                  itemBuilder: (context, index) {
+                    return NearestTile(
+                      nameoftitle: grouptasks[index],
+                    );
+                  },
+                ),
               ),
+
             ),
           ],
         ),
