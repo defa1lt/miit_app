@@ -88,12 +88,14 @@ class _SearchListViewState extends State<SearchListView> {
   List<String> timetableList = [];
 
   Future<void> _getTimeTableListApi() async {
+    print("${widget.firstName}${widget.lastName}");
     final prefs = await SharedPreferences.getInstance();
     prefs.remove('searchtimetable');
     timetableList.clear();
     var data = json.decode((await http.get(Uri.parse(
-            "http://89.208.221.228/api/timetables?teacher.firstName=${widget.firstName}&?teacher.lastName=${widget.lastName}&?teacher.middleName=${widget.middleName}")))
+            "http://89.208.221.228/api/timetables?teacher.firstName=${widget.firstName}&teacher.lastName=${widget.lastName}&teacher.middleName=${widget.middleName}")))
         .body);
+    print(data);
     TimeTables timeTable = TimeTables.fromJson(data);
     //await service.cancelAll();
     for (var i in timeTable.timetables) {
@@ -402,7 +404,7 @@ class _SearchListViewState extends State<SearchListView> {
           }
         }
       }
-      s = '${i.lesson[0].type},${i.lesson[0].name},${i.teacher[0].firstName} ${i.teacher[0].lastName} ${i.teacher[0].middleName},${i.location[0].number},$lessonTime,$dayName,${i.weekParity}';
+      s = '${i.lesson[0].type},${i.lesson[0].name}, ${i.teacher[0].lastName} ${i.teacher[0].firstName} ${i.teacher[0].middleName},${i.location[0].number},$lessonTime,$dayName,${i.weekParity}';
       timetableList.add(s);
     }
 
@@ -436,7 +438,7 @@ class _SearchListViewState extends State<SearchListView> {
     if ((DateTime(int.parse(_selectedDate[0]), int.parse(_selectedDate[1]),
                         int.parse(_selectedDate[2]))
                     .isoWeekOfYear -
-                DateTime(2022, 9, 1).isoWeekOfYear) %
+                DateTime(2023, 1, 1).isoWeekOfYear) %
             2 ==
         0) {
       weeknum = 1;
