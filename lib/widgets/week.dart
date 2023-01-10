@@ -49,7 +49,7 @@ class _WeekPageState extends State<WeekPage> {
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Text(
-                  'Рассписание',
+                  'Расписание',
                   style: Theme.of(context)
                       .textTheme
                       .headline6!
@@ -60,12 +60,12 @@ class _WeekPageState extends State<WeekPage> {
                 showYears: false,
                 initialDate: _selectedDate,
                 firstDate: DateTime(
-                  2022,
-                  9,
+                  2023,
+                  1,
                   1,
                 ),
                 lastDate: DateTime(
-                  2022,
+                  2023,
                   12,
                   31,
                 ),

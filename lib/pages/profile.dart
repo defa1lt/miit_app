@@ -8,7 +8,7 @@ import 'package:miit_app/pages/profile_pages/get_document.dart';
 
 class UserProfile extends StatelessWidget {
   List<MenuRowData> firstMenuRow = [
-    MenuRowData(Icons.library_books, 'Закакзать справку', GetPage()),
+    MenuRowData(Icons.library_books, 'Закзать справку', GetPage()),
     MenuRowData(Icons.flag_circle, 'Результаты сессии', MarkPage()),
   ];
   List<MenuRowData> SecondMenuRow = [
